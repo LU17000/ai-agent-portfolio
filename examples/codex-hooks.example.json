@@ -1,0 +1,30 @@
+{
+  "_comment": "Fictional, generic example. Mirrors claude-settings.example.json so both agent tools enforce the same check.",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|apply_patch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"scripts/post-edit-check.mjs\"",
+            "timeout": 5,
+            "statusMessage": "Running post-edit check"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"scripts/post-edit-check.mjs\" --deep",
+            "timeout": 30,
+            "statusMessage": "Running deep end-of-turn check"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "_comment": "Fictional, generic example. Not derived from any real project. Replace the script path and matcher with your own.",
+  "description": "Example: run a post-edit check after UI file changes, and a deeper pass when the agent finishes its turn.",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PROJECT_DIR}/scripts/post-edit-check.mjs\"",
+            "timeout": 5,
+            "statusMessage": "Running post-edit check"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PROJECT_DIR}/scripts/post-edit-check.mjs\" --deep",
+            "timeout": 30,
+            "statusMessage": "Running deep end-of-turn check"
+          }
+        ]
+      }
+    ]
+  }
+}
