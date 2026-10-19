@@ -26,7 +26,7 @@ codebase, and no proprietary architecture, roadmap, or business logic is disclos
 | `docs/` | Written explanations of each pattern: orchestration, review protocol, hooks, MCP/Skills governance, tool adoption, risk gating. |
 | `templates/` | Copy-paste-ready generic templates: shared agent rules, mission briefs, PR template, CI workflow, risk queue. |
 | `examples/` | Minimal, fictional configuration snippets (hook config for two different agent tools). |
-| `example-project/` | A small fictional project ("TaskFlow API") that runs the full workflow end to end: shared rules, two-agent mission briefs, a real CI workflow, an independent review report. |
+| `example-project/` | A fictional TaskFlow API documentation example: shared agent rules, two-agent mission briefs, a proposed three-job CI workflow, and an illustrative independent review report. Application code and tests are not included; no successful CI execution is evidenced in this repository. |
 | `case-studies/` | Short, anonymized narratives describing how these patterns played out in practice. |
 
 ## Skills demonstrated
@@ -34,8 +34,8 @@ codebase, and no proprietary architecture, roadmap, or business logic is disclos
 - **Multi-agent orchestration**: splitting work between an implementing agent and an
   independent reviewing agent, with a formal handoff protocol and a no-merge-before-review rule.
 - **Independent review & validation procedures**: a review report format with a
-  strict verdict taxonomy (`PASS` / `PASS WITH RESERVATIONS` / `FAIL`), backed by
-  reproducible CI evidence rather than self-reported success.
+  strict verdict taxonomy (`PASS` / `PASS WITH RESERVATIONS` / `FAIL`) and explicit
+  requirements for reproducible evidence. The TaskFlow report is illustrative, not an execution record.
 - **Hooks**: automated checks wired into an agent's tool-use lifecycle
   (`PostToolUse`, `Stop`), applied consistently across two different agent tools.
 - **MCP integration**: bringing an external documentation/context server into an
@@ -46,9 +46,9 @@ codebase, and no proprietary architecture, roadmap, or business logic is disclos
 - **Tool adoption and integration**: identifying a relevant third-party tool,
   adding it to a working environment, configuring it conservatively, and wiring it
   into an existing multi-agent workflow without giving it unattended authority.
-- **CI design**: multi-job pipelines covering lint/typecheck/unit tests/build, a
-  data-integrity job against an ephemeral database (schema constraints,
-  concurrency behavior), and an end-to-end browser test job.
+- **CI design**: illustrative workflow configurations for lint, type checks, unit
+  tests, build, database integrity, concurrency checks, and browser tests.
+  TaskFlow lacks the application and test files needed to run its proposed workflow.
 - **Git/GitHub discipline**: branch naming conventions, commit message conventions,
   a structured PR template, and explicit anti-destructive-action rules.
 - **Risk gating for agentic workflows**: a queue for irreversible or sensitive
@@ -65,6 +65,6 @@ codebase, and no proprietary architecture, roadmap, or business logic is disclos
 
 1. Read `docs/01-multi-agent-orchestration.md` and `docs/02-independent-review-protocol.md`
    for the core pattern.
-2. Look at `example-project/` to see the pattern actually running (real CI, real
-   mission briefs, a real review report) on a fictional codebase.
+2. Explore `example-project/` for a worked documentation example showing how
+   mission briefs, CI checks, and an independent review report fit together.
 3. Read `case-studies/` for how this played out on a real (but unnamed) project.
