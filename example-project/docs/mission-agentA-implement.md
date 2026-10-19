@@ -1,5 +1,9 @@
 # Mission — implementing agent (TaskFlow: priority field + transition hardening)
 
+> Fictional mission brief for documentation purposes. Referenced source files,
+> branches and reports describe the scenario and are not all present in this
+> repository. This brief does not record an executed mission.
+
 ## Role
 
 Acting as **primary implementer** on `T-00042 — add task priority + harden the
