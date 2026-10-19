@@ -19,6 +19,14 @@ Every file here is either a **generic, reusable template** or a **fictional exam
 project** built specifically for this portfolio. Nothing is copied from any private
 codebase, and no proprietary architecture, roadmap, or business logic is disclosed.
 
+## Featured case study — AI systems design and orchestration
+
+**From a natural-language software idea toward a tested, deliverable application:** an experimental, human-supervised multi-agent development workflow.
+
+**Read the case study:** [Français 🇫🇷](case-studies/controlled-multi-agent-development.fr.md) · [English 🇬🇧](case-studies/controlled-multi-agent-development.md)
+
+The case study distinguishes the project's long-term goal from implemented and tested mechanisms; it does not claim production readiness.
+
 ## What's in this repository
 
 | Path | Content |
