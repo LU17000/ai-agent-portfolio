@@ -1,3 +1,6 @@
+# Illustrative TaskFlow CI configuration.
+# Referenced application files, package manifests, SQL scripts and tests are not
+# included. No successful execution is evidenced in this repository.
 name: CI
 
 on:
