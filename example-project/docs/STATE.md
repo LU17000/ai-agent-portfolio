@@ -1,19 +1,24 @@
-# TaskFlow API — current state (fictional)
+# TaskFlow API — documentation example status
 
-## Status
+## Published content
 
-- Task CRUD and status workflow (`todo` → `in_progress` → `done`): **VALIDATED**.
-- `priority` field + concurrent status-transition hardening: **VALIDATED** —
-  independent review passed after one remediation cycle. See
-  `docs/review-report-example.md`.
+- Shared agent rules and fictional implementation/review mission briefs.
+- A proposed three-job CI workflow.
+- An illustrative review report describing a hypothetical concurrency defect,
+  a proposed fix, and a non-blocking test improvement.
 
-## Known non-blocking reservation
+## Execution and validation status
 
-- The concurrency test for the status-transition function could assert the exact
-  database error code more precisely (see review report, `NOTE` finding). Left
-  as-is: doesn't affect correctness, tracked here so it isn't forgotten.
+Application code, database scripts, package manifests, and executable tests
+referenced by the example are not included.
 
-## Next task
+No successful TaskFlow CI execution is evidenced in this repository.
+The illustrative review verdict does not establish that an implementation
+has been tested or validated.
 
-None — this is a fixed, fictional example built to illustrate a workflow, not an
-evolving project.
+## Educational purpose
+
+This example demonstrates how to separate implementation from independent
+review, specify meaningful checks, and record findings and reservations.
+It is a fixed documentation example with no implementation milestone
+claimed as complete.

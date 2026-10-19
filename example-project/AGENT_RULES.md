@@ -3,6 +3,10 @@
 Filled-in instance of `templates/AGENT_RULES.template.md` for the fictional
 TaskFlow example project.
 
+The procedures below illustrate rules for a hypothetical implementation. They do
+not indicate that TaskFlow application code or tests are included, or that the
+procedures have been executed.
+
 ## Mandatory startup procedure
 
 Before changing anything, every agent must:

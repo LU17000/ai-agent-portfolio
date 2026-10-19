@@ -1,64 +1,57 @@
-# Independent review report — T-00042 (priority field + transition hardening)
+# Illustrative independent review report — fictional task T-00042
 
-**Reviewer**: independent reviewing agent (per `docs/mission-agentB-review.md`)
-**Reviewed head**: `feature/T-00042-priority-and-transition` @ implementer's final commit
-**Scope**: schema, status-transition function, API validation, tests (per mission brief)
+> This is a fictional report-format example, not a record of an executed review.
+> The branch, source paths, defect, proposed fix and outcomes below belong to
+> the scenario. No corresponding implementation, test logs, commit SHA or
+> successful CI run is provided in this repository.
 
-## Findings
+**Reviewer (fictional role):** independent reviewing agent
+**Illustrative review target:** hypothetical implementation described in the mission brief; no reviewed commit is evidenced here.
+**Scope:** proposed schema, transition function, API validation and tests.
 
-### MAJOR — status-transition function does not serialize concurrent callers
+## Hypothetical findings
 
-**Location**: `db/schema/002_status_transition_fn.sql`
+### MAJOR — concurrent status transitions need serialization
 
-**Failure scenario**: two requests both call `set_task_status(task_id, ...)` for
-the same task at nearly the same time — for example a user double-clicking a
-"start task" button, or a retried request after a slow network response. The
-original function reads the current status, checks it's a legal source state, then
-writes the new status as two separate statements with no row lock in between. Under
-that interleaving, both calls can read the *same* pre-transition status before
-either writes, both pass the legality check, and both writes apply — the second
-one silently overwriting the first's effect instead of one of the two being
-correctly rejected as "no longer a legal transition."
+**Illustrative location:** `db/schema/002_status_transition_fn.sql` (not included).
 
-**Evidence**: `db/tests/status_transition_concurrency.sh`, run before the fix,
-fires two concurrent `in_progress → done` / `in_progress → todo` calls against the
-same row and shows both succeeding when exactly one should.
+**Failure scenario:** two requests call `set_task_status(task_id, ...)` on the
+same task at nearly the same time. If both read the same original status before
+either writes, each could pass the legality check and the second write could
+silently overwrite the first.
 
-**Fix applied**: the function now takes the row lock (`SELECT ... FOR UPDATE`) on
-the target task before reading its status, so the second concurrent caller blocks
-until the first transition commits, then re-reads the now-current status and
-correctly rejects its own transition as no longer legal.
+**Evidence required (not executed here):** a concurrency regression test
+launching two simultaneous transitions, demonstrating both incorrectly succeed
+before the proposed fix.
 
-### NOTE — concurrency test could assert the exact error more precisely
+**Proposed fix in this fictional scenario:** acquire a row lock
+(`SELECT ... FOR UPDATE`) before reading the current state, then validate
+the transition against the locked row. Verify the losing operation is rejected.
 
-**Location**: `db/tests/status_transition_concurrency.sh`
+### NOTE — improve specificity of the concurrency assertion
 
-The test currently asserts that exactly one of the two concurrent calls succeeds,
-which is sufficient to catch the MAJOR finding above, but it does not additionally
-assert *which* database error code the losing call receives. Tightening this would
-make a future regression easier to diagnose from CI output alone. Non-blocking;
-recorded in `docs/STATE.md` rather than fixed in this pass, since it doesn't affect
-correctness.
+An illustrative non-blocking reservation would be that the test checks for
+exactly one successful transition without asserting the losing call's exact
+database error code. This is a hypothetical test-design improvement.
 
-## Checks run
+## Required checks — not evidenced as executed here
 
-- `npm run lint` — pass
-- `npm run typecheck` — pass
-- `npm test` — pass (existing suite + new unit test for the rejected-transition case)
-- `npm run build` — pass
-- `db/tests/status_transition.sql` — pass
-- `db/tests/status_transition_concurrency.sh` — failed before the fix (both calls
-  succeeded), pass after (exactly one succeeds, the other receives a clean
-  rejection)
-- CI run on the fixed head: `quality`, `data-integrity`, `e2e` — all green
+- Lint, type checks, unit tests and build.
+- Database constraint and allowed-transition tests.
+- A concurrent-transition regression test demonstrating failure before the
+  proposed fix and expected behavior after it.
+- Successful quality, data-integrity and end-to-end CI jobs on the exact
+  reviewed commit.
 
-## Verdict
+These are requirements for the fictional scenario, not observed results.
 
-**PASS WITH RESERVATIONS** — no open critical/major finding; the `NOTE` above is a
-non-blocking test-robustness improvement, tracked in `docs/STATE.md` rather than
-left silently unrecorded.
+## Illustrative verdict
 
-## Final state
+**PASS WITH RESERVATIONS** would be appropriate *only if* the fix and required
+checks had been independently verified. No validation is claimed here.
 
-Fix committed and pushed on `feature/T-00042-priority-and-transition`; `docs/STATE.md`
-updated to reflect the `PASS WITH RESERVATIONS` verdict and the open `NOTE`.
+## Illustrative completion criteria
+
+Commit the verified fix, record the reviewed SHA and CI evidence, and update
+the status document with remaining reservations. None of these actions is
+evidenced for TaskFlow in this repository.
